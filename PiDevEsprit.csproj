@@ -134,6 +134,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Sign_InController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -226,6 +227,32 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Extra_Views\charts-chartjs.html" />
+    <Content Include="Views\Extra_Views\charts-flot.html" />
+    <Content Include="Views\Extra_Views\charts-peity.html" />
+    <Content Include="Views\Extra_Views\font-fontawesome.html" />
+    <Content Include="Views\Extra_Views\font-themify.html" />
+    <Content Include="Views\Extra_Views\forms-advanced.html" />
+    <Content Include="Views\Extra_Views\forms-basic.html" />
+    <Content Include="Views\Extra_Views\index.html" />
+    <Content Include="Views\Extra_Views\maps-gmap.html" />
+    <Content Include="Views\Extra_Views\maps-vector.html" />
+    <None Include="Views\Extra_Views\pageLogin.cshtml" />
+    <Content Include="Views\Extra_Views\page-register.html" />
+    <Content Include="Views\Extra_Views\pages-forget.html" />
+    <Content Include="Views\Extra_Views\tables-basic.html" />
+    <Content Include="Views\Extra_Views\tables-data.html" />
+    <Content Include="Views\Extra_Views\ui-alerts.html" />
+    <Content Include="Views\Extra_Views\ui-badges.html" />
+    <Content Include="Views\Extra_Views\ui-buttons.html" />
+    <Content Include="Views\Extra_Views\ui-cards.html" />
+    <Content Include="Views\Extra_Views\ui-grids.html" />
+    <Content Include="Views\Extra_Views\ui-modals.html" />
+    <Content Include="Views\Extra_Views\ui-progressbar.html" />
+    <Content Include="Views\Extra_Views\ui-switches.html" />
+    <Content Include="Views\Extra_Views\ui-tabs.html" />
+    <Content Include="Views\Extra_Views\ui-typgraphy.html" />
+    <Content Include="Views\Extra_Views\widgets.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -240,6 +267,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Extra_Views\README.md" />
+    <Content Include="Views\Sign_In\SignIn.cshtml" />
+    <Content Include="Views\Sign_In\resgiter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

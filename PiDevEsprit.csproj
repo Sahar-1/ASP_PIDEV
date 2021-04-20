@@ -135,11 +135,16 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\Question_SatisfactionController.cs" />
     <Compile Include="Controllers\Sign_InController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Answer_Satisfaction.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Question_Satisfaction.cs" />
+    <Compile Include="Models\Review.cs" />
+    <Compile Include="Models\Satisfaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1402,6 +1407,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Message\" />
+    <Folder Include="Views\Question_Satisfaction\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

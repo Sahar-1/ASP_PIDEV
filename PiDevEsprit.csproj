@@ -136,6 +136,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\Question_SatisfactionController.cs" />
+    <Compile Include="Controllers\SatisfactionController.cs" />
     <Compile Include="Controllers\Sign_InController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1403,11 +1404,12 @@
     <Content Include="Views\Sign_In\SignIn.cshtml" />
     <Content Include="Views\Sign_In\resgiter.cshtml" />
     <Content Include="Views\front.cshtml" />
+    <Content Include="Views\Message\GetAllMessages.cshtml" />
+    <Content Include="Views\Question_Satisfaction\Create.cshtml" />
+    <Content Include="Views\Satisfaction\GetAllSatisfactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Message\" />
-    <Folder Include="Views\Question_Satisfaction\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

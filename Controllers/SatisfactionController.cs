@@ -2,65 +2,63 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using System.Web;
+
 using System.Web.Mvc;
 
 namespace PiDevEsprit.Controllers
 {
-    public class MessageController : Controller
+    public class SatisfactionController : Controller
     {
         HttpClient httpClient;
         string baseAddress;
-        public MessageController()
+        public SatisfactionController()
         {
-            baseAddress = "http://localhost:8900/messages/";
+            baseAddress = "http://localhost:8900/Satisfaction/";
             httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseAddress);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-           // var _AccessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWQuYWhlZEBlc3ByaXQudG4kMmEkMTAkWHJlSzdaZUkwZ2xMNFFsTFpKNm1lTzhxNTBUQzdwdFZidWk4OWhmZjZnUERiNWl2aTZkaS5bUk9MRV9BRE1JTl0iLCJpYXQiOjE2MTg4OTA5MzQsImV4cCI6MTYxMjcxNDM4M30.w3dYJUNbbmgXEPunmxc478bP2HAibQZRnz2vUujSddU";
-           // httpClient.DefaultRequestHeaders.Add("Authorization", String.Format("Bearer {0}", _AccessToken));
+            var _AccessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWQuYWhlZEBlc3ByaXQudG4kMmEkMTAkWHJlSzdaZUkwZ2xMNFFsTFpKNm1lTzhxNTBUQzdwdFZidWk4OWhmZjZnUERiNWl2aTZkaS5bUk9MRV9BRE1JTl0iLCJpYXQiOjE2MTg4OTA5MzQsImV4cCI6MTYxMjcxNDM4M30.w3dYJUNbbmgXEPunmxc478bP2HAibQZRnz2vUujSddU";
+            httpClient.DefaultRequestHeaders.Add("Authorization", String.Format("Bearer {0}", _AccessToken));
         }
-
-        // GET: Message
-        //  [AllowAnonymous]
-        public ActionResult GetAllMessages()
+        // GET: Satisfaction
+        public ActionResult GetAllSatisfactions()
         {
-         
-                var tokenResponse = httpClient.GetAsync(baseAddress + "retrieve-all-Messages").Result;
-                if (tokenResponse.IsSuccessStatusCode)
-                {
-                    var satisfactions = tokenResponse.Content.ReadAsAsync<IEnumerable<Message>>().Result;
+            var tokenResponse = httpClient.GetAsync(baseAddress + "retrieve-all-satisfactions").Result;
+           var msg = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "Oops!!!" };
+           //throw new HttpResponseException(msg);
+            if (tokenResponse.IsSuccessStatusCode)
+            {
+                var satisfactions = tokenResponse.Content.ReadAsAsync<IEnumerable<Satisfaction>>().Result;
 
-                    return View(satisfactions);
-                }
-                else
-                {
-                    var satisfactions = tokenResponse.Content.ReadAsAsync<IEnumerable<Message>>().Result;
+                return View(satisfactions);
+            }
+            else
+            {
+                var satisfactions = tokenResponse.Content.ReadAsAsync<IEnumerable<Satisfaction>>().Result;
 
-                    return View(satisfactions);
-                    //  return View(new List<Satisfaction>());
-                }
-            
-
+                return View(satisfactions);
+                //  return View(new List<Satisfaction>());
+            }
         }
 
-        // GET: Message/Details/5
+        // GET: Satisfaction/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Message/Create
+        // GET: Satisfaction/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Message/Create
-        [HttpPost]
+        // POST: Satisfaction/Create
+        [System.Web.Http.HttpPost]
         public ActionResult Create(FormCollection collection)
         {
             try
@@ -75,13 +73,13 @@ namespace PiDevEsprit.Controllers
             }
         }
 
-        // GET: Message/Edit/5
+        // GET: Satisfaction/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Message/Edit/5
+        // POST: Satisfaction/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -97,13 +95,13 @@ namespace PiDevEsprit.Controllers
             }
         }
 
-        // GET: Message/Delete/5
+        // GET: Satisfaction/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Message/Delete/5
+        // POST: Satisfaction/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

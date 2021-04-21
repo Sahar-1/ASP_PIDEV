@@ -11,6 +11,7 @@ namespace PiDevEsprit.Models
         public long id { get; set; }
         public string question_Sat { get; set; }
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime dateOfCreation { get; set; }
         public List<Satisfaction> satisfactions { get; set; }
         public HashSet<Answer_Satisfaction> answers { get; set; } 

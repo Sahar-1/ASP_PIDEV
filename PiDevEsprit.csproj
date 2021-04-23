@@ -133,6 +133,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BillController.cs" />
+    <Compile Include="Controllers\ForumSubjectController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\Question_SatisfactionController.cs" />
@@ -142,10 +144,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Answer_Satisfaction.cs" />
+    <Compile Include="Models\Bill.cs" />
+    <Compile Include="Models\ForumComment.cs" />
+    <Compile Include="Models\ForumSubject.cs" />
+    <Compile Include="Models\Garden.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\PaypalPaymentIntent.cs" />
+    <Compile Include="Models\PaypalPaymentMethod.cs" />
     <Compile Include="Models\Question_Satisfaction.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\Satisfaction.cs" />
+    <Compile Include="Models\Vote.cs" />
+    <Compile Include="Models\VoteType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1370,6 +1380,11 @@
     <Content Include="Views\Extra_Views\maps-gmap.html" />
     <Content Include="Views\Extra_Views\maps-vector.html" />
     <Content Include="Views\back.cshtml" />
+    <Content Include="Views\Bill\Create.cshtml" />
+    <Content Include="Views\Bill\Get_All_Bills.cshtml" />
+    <Content Include="Views\Bill\Details.cshtml" />
+    <Content Include="Views\Bill\Edit.cshtml" />
+    <Content Include="Views\Bill\Delete.cshtml" />
     <None Include="Views\Extra_Views\pageLogin.cshtml" />
     <Content Include="Views\Extra_Views\page-register.html" />
     <Content Include="Views\Extra_Views\pages-forget.html" />
@@ -1407,6 +1422,10 @@
     <Content Include="Views\Message\GetAllMessages.cshtml" />
     <Content Include="Views\Question_Satisfaction\Create.cshtml" />
     <Content Include="Views\Satisfaction\GetAllSatisfactions.cshtml" />
+    <Content Include="Views\ForumSubject\Index.cshtml" />
+    <Content Include="Views\ForumSubject\Details.cshtml" />
+    <Content Include="Views\ForumSubject\Delete.cshtml" />
+    <Content Include="Views\ForumSubject\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

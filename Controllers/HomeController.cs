@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace PiDevEsprit.Controllers
 {
+    [AuthenticateUser]
     public class HomeController : Controller
     {
         public ActionResult Index()

@@ -58,6 +58,29 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+	  <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+		  <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+	  </Reference>
+	  <Reference Include="System.Numerics" />
+	  <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+		  <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+	  </Reference>
+	  <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+		  <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0-preview.1.21102.12\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+	  </Reference>
+	  <Reference Include="System.Runtime.Serialization" />
+	  <Reference Include="System.Text.Encodings.Web, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+		  <HintPath>packages\System.Text.Encodings.Web.6.0.0-preview.1.21102.12\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+	  </Reference>
+	  <Reference Include="System.Text.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+		  <HintPath>packages\System.Text.Json.6.0.0-preview.1.21102.12\lib\net461\System.Text.Json.dll</HintPath>
+	  </Reference>
+	  <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+		  <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+	  </Reference>
+	  <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+		  <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+	  </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -142,6 +165,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+	  <Compile Include="Controllers\AuthenticateUser.cs" />
+	  <Compile Include="Controllers\EventController.cs" />
+	  <Compile Include="Controllers\Extensions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\Question_SatisfactionController.cs" />
@@ -150,6 +176,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+	  <Compile Include="Models\DBO_Events.cs" />
+	  <Compile Include="Models\DBO_Role.cs" />
+	  <Compile Include="Models\DBO_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1330,6 +1359,47 @@
     <Content Include="Content\js\vmap.sampledata.js" />
     <Content Include="Content\js\widgets.js" />
     <Content Include="Content\scss\style.css" />
+	  <Content Include="Content\themes\base\accordion.css" />
+	  <Content Include="Content\themes\base\all.css" />
+	  <Content Include="Content\themes\base\autocomplete.css" />
+	  <Content Include="Content\themes\base\base.css" />
+	  <Content Include="Content\themes\base\button.css" />
+	  <Content Include="Content\themes\base\core.css" />
+	  <Content Include="Content\themes\base\datepicker.css" />
+	  <Content Include="Content\themes\base\dialog.css" />
+	  <Content Include="Content\themes\base\draggable.css" />
+	  <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+	  <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+	  <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+	  <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+	  <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+	  <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+	  <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+	  <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+	  <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+	  <Content Include="Content\themes\base\jquery-ui.css" />
+	  <Content Include="Content\themes\base\jquery-ui.min.css" />
+	  <Content Include="Content\themes\base\menu.css" />
+	  <Content Include="Content\themes\base\progressbar.css" />
+	  <Content Include="Content\themes\base\resizable.css" />
+	  <Content Include="Content\themes\base\selectable.css" />
+	  <Content Include="Content\themes\base\selectmenu.css" />
+	  <Content Include="Content\themes\base\slider.css" />
+	  <Content Include="Content\themes\base\sortable.css" />
+	  <Content Include="Content\themes\base\spinner.css" />
+	  <Content Include="Content\themes\base\tabs.css" />
+	  <Content Include="Content\themes\base\theme.css" />
+	  <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1343,6 +1413,8 @@
     <Content Include="Content\scss\style.css.map" />
     <Content Include="Content\scss\style.scss" />
     <Content Include="Content\images\logo.psd" />
+	  <Content Include="Content\css\StyleSheet1.sass" />
+	  <Content Include="Content\StyleSheet1.less" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1366,6 +1438,7 @@
     <Content Include="Views\Extra_Views\index.html" />
     <Content Include="Views\Extra_Views\maps-gmap.html" />
     <Content Include="Views\Extra_Views\maps-vector.html" />
+	  <Content Include="Views\Event\Create.cshtml" />
     <None Include="Views\Extra_Views\pageLogin.cshtml" />
     <Content Include="Views\Extra_Views\page-register.html" />
     <Content Include="Views\Extra_Views\pages-forget.html" />
@@ -1399,10 +1472,15 @@
     <Content Include="Views\Extra_Views\README.md" />
     <Content Include="Views\Sign_In\SignIn.cshtml" />
     <Content Include="Views\Sign_In\resgiter.cshtml" />
+	  <Content Include="Views\Sign_In\Get_All_Users.cshtml" />
+	  <Content Include="Views\Sign_In\ForgotPassword.cshtml" />
+	  <Content Include="Views\Sign_In\ErrorPage.cshtml" />
+	  <Content Include="Views\Sign_In\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+	  <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -18,6 +18,8 @@ namespace PiDevEsprit.Models
         [DataType(DataType.Date)]
         //   [JsonProperty("date")]
         [JsonProperty(PropertyName = "date")]
+ 
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
         //  [JsonProperty("content")]
         [JsonProperty(PropertyName = "content")]

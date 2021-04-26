@@ -6,21 +6,30 @@ using System.Web.Mvc;
 
 namespace PiDevEsprit.Controllers
 {
-    [AuthenticateUser]
+    
     public class HomeController : Controller
     {
+
+        /// Admin template 
+        [AuthenticateUser]
         public ActionResult Index()
         {
             return View();
         }
+        // Client template
+        public ActionResult ClientIndex()
+        {
+            return View();
+        }
 
+        // Extra garbage views 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
+        // Extra garbage views
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

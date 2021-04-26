@@ -1,0 +1,73 @@
+﻿@model PiDevEsprit.Models.Post
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/front.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.post_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.post_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_of_creation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_of_creation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.types)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.types)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.signaler)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.signaler)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

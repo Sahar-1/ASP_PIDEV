@@ -12,7 +12,7 @@ namespace PiDevEsprit.Models
     {
         // [JsonProperty("id")]
 
-        [JsonProperty(PropertyName = "id")]
+        //[JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
         [DataType(DataType.Date)]
@@ -22,8 +22,8 @@ namespace PiDevEsprit.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
         //  [JsonProperty("content")]
-        [JsonProperty(PropertyName = "content")]
-        public string Content { get; set; }
+       // [JsonProperty(PropertyName = "content")]
+        public string content { get; set; }
        
         public Message()
         {

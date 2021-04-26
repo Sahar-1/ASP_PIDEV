@@ -1,6 +1,7 @@
 ﻿using PiDevEsprit.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,22 +27,21 @@ namespace PiDevEsprit.Controllers
 
         // GET: Message
         //  [AllowAnonymous]
-        public ActionResult GetAllMessages()
+        public ActionResult GetAllMessages( int id)
         {
          
-                var tokenResponse = httpClient.GetAsync(baseAddress + "retrieve-all-Messages").Result;
+                var tokenResponse = httpClient.GetAsync(baseAddress+ "retrieve-conversation/" + id).GetAwaiter().GetResult();
                 if (tokenResponse.IsSuccessStatusCode)
                 {
-                    var satisfactions = tokenResponse.Content.ReadAsAsync<IEnumerable<Message>>().Result;
+                    var Messages = tokenResponse.Content.ReadAsAsync<IEnumerable<Message>>().Result;
 
-                    return View(satisfactions);
+                    return View(Messages);
                 }
                 else
                 {
-                    var satisfactions = tokenResponse.Content.ReadAsAsync<IEnumerable<Message>>().Result;
+                    var Messages = tokenResponse.Content.ReadAsAsync<IEnumerable<Message>>().GetAwaiter().GetResult();
 
-                    return View(satisfactions);
-                    //  return View(new List<Satisfaction>());
+                     return View(Messages);
                 }
             
 
@@ -50,7 +50,16 @@ namespace PiDevEsprit.Controllers
         // GET: Message/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var tokenResponse = httpClient.GetAsync(baseAddress + "findMessageById/" + id).Result;
+            if (tokenResponse.IsSuccessStatusCode)
+            {
+                var msg = tokenResponse.Content.ReadAsAsync<Message>().Result;
+                return View(msg);
+            }
+            else
+            {
+                return View(new Message());
+            }
         }
 
         // GET: Message/Create
@@ -61,16 +70,30 @@ namespace PiDevEsprit.Controllers
 
         // POST: Message/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Message msg,int id)
         {
+            Debug.WriteLine(msg.content);
+            Debug.WriteLine(id);
+
             try
             {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                var APIResponse = httpClient.PostAsJsonAsync<Message>(baseAddress+"sendMessage/"+id,msg).GetAwaiter().GetResult();
+
+                var message = APIResponse.ToString();
+                if (APIResponse.IsSuccessStatusCode)
+                {
+             
+                    return RedirectToAction("GetAllMessages");
+                }
+                else
+                {
+                    return RedirectToAction("Create");
+                }
+
             }
             catch
-            {
+            { 
                 return View();
             }
         }
@@ -100,7 +123,12 @@ namespace PiDevEsprit.Controllers
         // GET: Message/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var tokenResponse = httpClient.DeleteAsync(baseAddress + "remove-Message/" + id).Result;
+            if (tokenResponse.IsSuccessStatusCode)
+            {
+                return RedirectToAction("GetAllMessages");
+            }
+            return RedirectToAction("GetAllMessages");
         }
 
         // POST: Message/Delete/5

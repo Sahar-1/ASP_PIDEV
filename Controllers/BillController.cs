@@ -20,8 +20,7 @@ namespace PiDevEsprit.Controllers
         string baseAddress;
         public BillController()
         {
-            const long id1 = 8;
-            const long id2 = 3;
+            
             baseAddress = "http://localhost:8900/";
             httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseAddress);
@@ -32,34 +31,66 @@ namespace PiDevEsprit.Controllers
 
 
 
-        public ActionResult Create() 
+        //public ActionResult Create() 
+        //{
+        //    return View();
+        //}
+
+        //// POST: Bill/Create
+        //[HttpPost]
+        //public async Task<ActionResult> Create(Bill bill, String id , String id1) 
+        //{
+        //    Object billToAdd = new
+        //    {
+        //        title = bill.title,
+        //        dateStart = bill.dateStart,
+        //        dateDeadline = bill.dateDeadline,
+        //        discription = bill.discription,
+        //        total = bill.total,
+        //        amount = bill.amount,
+        //        discount = bill.discount,
+        //    };
+        //    var objectContent = new StringContent(JsonConvert.SerializeObject(billToAdd), Encoding.UTF8, "application/json");
+        //    HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("addBill/" + id + "/" + id1, objectContent);
+        //    return RedirectToAction("getAllBills", "Bill");
+
+        //}
+
+
+
+        public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Bill/Create
         [HttpPost]
-        public async Task<ActionResult> Create(Bill bill, long id1 = 8, long id2 = 3) 
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Bill bill, string id, string id1)
         {
-            Object billToAdd = new
+
+
+
+            string Baseurl = "http://localhost:8900/";
+
+            using (var client = new HttpClient())
             {
-                title = bill.title,
-                dateStart = bill.dateStart,
-                dateDeadline = bill.dateDeadline,
-                discription = bill.discription,
-                total = bill.total,
-                amount = bill.amount,
-                discount = bill.discount,
-            };
-            var objectContent = new StringContent(JsonConvert.SerializeObject(billToAdd), Encoding.UTF8, "application/json");
-            HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("addBill/" + id1 + "/" + id2, objectContent);
-            return RedirectToAction("Get_All_Bills", "Bill");
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+          
+                var response = await client.PostAsJsonAsync("addBill/" + id + "/" + id1, bill);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("listSubjects");
+                }
+            }
+            return View(bill);
+
 
         }
 
 
         // GET: Bill/Details/4
-        public ActionResult Details(long id) 
+        public ActionResult Details(long id)
         {
             var tokenResponse = httpClient.GetAsync(baseAddress + "retrieve-bill/" + id).Result;
             if (tokenResponse.IsSuccessStatusCode)
@@ -71,37 +102,42 @@ namespace PiDevEsprit.Controllers
             {
                 return View(new Bill());
             }
-
         }
 
-        public async Task<ActionResult> Get_All_Bills() 
+
+
+        public async Task<ActionResult> getAllBills() 
         {
             IEnumerable<Bill> bills = null;
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:8900/");
-                var result = await client.GetAsync("getAllBills");
-
-
-                //If success received   
-                if (result.IsSuccessStatusCode)
+                try
                 {
-                    try
+                    var result = await client.GetAsync("bill");
+                    if (result.IsSuccessStatusCode)
                     {
-                        bills = await result.Content.ReadAsAsync<IList<Bill>>();
+                        try
+                        {
+                            bills = await result.Content.ReadAsAsync<IList<Bill>>();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Console.WriteLine(e.Message);
+                        //Error response received   
+                        bills = Enumerable.Empty<Bill>();
+                        ModelState.AddModelError(string.Empty, "Server error try after some time.");
                     }
                 }
-                else
+                catch (NullReferenceException e)
                 {
-                    //Error response received   
-                    bills = Enumerable.Empty<Bill>();
-                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                    // Do something with e, please.
                 }
+
             }
 
             return View(bills);
@@ -120,6 +156,7 @@ namespace PiDevEsprit.Controllers
             {
                 var bill = tokenResponse.Content.ReadAsAsync<Bill>().Result;
                 return View(bill);
+                
             }
             else
             {
@@ -134,7 +171,13 @@ namespace PiDevEsprit.Controllers
             try
             {
                 var APIResponse = httpClient.PutAsJsonAsync<Bill>(baseAddress + "updateBill/" + id, bill).ContinueWith(postTask => postTask.Result.EnsureSuccessStatusCode());
-                return RedirectToAction("Get_All_Bills");
+                return RedirectToAction("getAllBills",Redirect(Request.Url.AbsoluteUri));
+                
+
+
+
+
+
             }
             catch
             {
@@ -149,9 +192,9 @@ namespace PiDevEsprit.Controllers
             var tokenResponse = httpClient.DeleteAsync(baseAddress + "remove-Bill/" + id).Result;
             if (tokenResponse.IsSuccessStatusCode)
             {
-                return RedirectToAction("Get_All_Bills");
+                return RedirectToAction("getAllBills");
             }
-            return RedirectToAction("Get_All_Bills");
+            return RedirectToAction("getAllBills");
         }
 
     }

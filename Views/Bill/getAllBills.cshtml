@@ -1,0 +1,94 @@
+﻿@model IEnumerable<PiDevEsprit.Models.Bill>
+
+@{
+    ViewBag.Title = "getAllBills";
+    Layout = "~/Views/dashboardTemplate.cshtml";
+    
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Factures</strong>
+            </div>
+            <div>
+                <button type="submit"><i class="tn btn-success btn-flat m-b-30 m-t-30"></i><span>@Html.ActionLink("Create New Bill", "Create")</span></button>
+
+            </div>
+           
+
+            @*<p>
+                @Html.ActionLink("Create New Bill", "Create")
+            </p>*@
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.title)</th>
+                            <th>@Html.DisplayNameFor(model => model.dateStart)</th>
+                            <th>@Html.DisplayNameFor(model => model.dateDeadline)</th>
+                            <th>@Html.DisplayNameFor(model => model.discription)</th>
+                            <th>@Html.DisplayNameFor(model => model.total)</th>
+                            <th>@Html.DisplayNameFor(model => model.amount)</th>
+                            <th>@Html.DisplayNameFor(model => model.discount)</th>
+                            <th>@Html.DisplayNameFor(model => model.gardenName)</th>
+                            <th> Utilisateur</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.dateStart)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.dateDeadline)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.discription)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.total)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.amount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.discount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.gardenName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.userFirstName)  @Html.DisplayFor(modelItem => item.userLastName)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            //jQuery('#bootstrap-data-table-export').DataTable();
+        });
+    </script>
+}
+

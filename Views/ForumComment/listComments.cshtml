@@ -1,0 +1,160 @@
+﻿@model PiDevEsprit.Models.ForumSubject
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/front.cshtml";
+}
+
+@*
+    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+*@
+
+<div class="central-meta item">
+
+    <div class="site-admin">
+        <div class="admin-avatar">
+            <img src="~/Content/front/images/resources/friend-avatar10.jpg" />
+        </div>
+        <div class="admin-postmeta">
+            <h4>@Model.title</h4>
+            <span>@Model.postedDate</span>
+            <p>
+                @Model.question
+            </p>
+
+        </div>
+    </div>
+
+    <div class="coment-area">
+        <h4 class="comment-title">
+            @{
+                var comments = Model.forumComments;
+                var commentsCount = comments.Count();
+            }
+            @commentsCount  comments
+        </h4>
+        @foreach (var item in comments)
+        {
+            <ul class="we-comet">
+                <li>
+                    <div class="comet-avatar">
+                        <img src="~/Content/front/images/resources/friend-avatar9.jpg" />
+                    </div>
+                    <div class="we-comment">
+                        <div class="coment-head">
+                            <h5>
+                                <a href="time-line.html" title="">
+                                    @Html.DisplayFor(modelItem => item.userFirstName)   @Html.DisplayFor(modelItem => item.userLastName)
+                                </a>
+                            </h5>
+                            <span>@Html.DisplayFor(modelItem => item.postedDate)</span>
+
+
+
+                            <a class="we-reply btn-delete-comm" href="#" title="Edit" id="btn_edit_comm_@item.id">
+                                <i class="fa fa-edit"></i>
+                            </a>
+
+                            <a class="we-reply" href="@Url.Action("Delete", "ForumComment", new { idComment = item.id, idForumSubject=Model.id })">
+                                <i class="fa fa-trash"></i>
+                            </a>
+
+                        </div>
+                        <p id="comm_@item.id" class="comm-answer">  @Html.DisplayFor(modelItem => item.answer)</p>
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="contact-form pt-0 px-2" style="width:100%">
+                <form action="/ForumComment/Create" method="post">
+                    <div class="form-group">
+                        <textarea name="commentText" rows="4" id="textarea" required="required"></textarea>
+                        <input value="@Model.id" name="subjectId" hidden />
+                        <label class="control-label" for="textarea">Leave a comment</label><i class="mtrl-select"></i>
+                    </div>
+                    <div class="submit-btns">
+                        <input type="submit" value="Submit" name="Submit" class="btn signup"/>
+                            @*<i>Submit</i>*@
+                            @*<span>@Html.ActionLink("Create New Topic", "Create","ForumSubject",new { subjectId = Model.id },null)</span>*@
+                       @* </input>*@
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        const pIdPrefix = 'comm_';
+        const btnIdPrefix = 'btn_edit_comm_';
+        const textAreaIdPrefix = 'new_comm_'
+
+        function editComment(subjectId, commentId) {
+            var newCommTextarea = $(`#${textAreaIdPrefix}${commentId}`)[0];
+            var commentAnswer = newCommTextarea.value;
+            $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Edit")',
+                dataType: 'json',
+                data: { subjectId, commentId, commentAnswer },
+                success: function (data) {
+                    $(`#${textAreaIdPrefix}${commentId}`)[0].parentElement.parentElement.hidden = true;
+                    $(`#${pIdPrefix}${commentId}`).html(commentAnswer)
+                    $(`#${pIdPrefix}${commentId}`).attr('hidden', false);
+
+            },
+            error: function (ex) {
+                var r = jQuery.parseJSON(response.responseText);
+                alert("Message: " + r.Message);
+            }
+        });
+
+            
+        };
+
+
+        $(document).ready(function () {
+            var subjectId = @Model.id;
+            jQuery('.btn-delete-comm').on('click', function (event) {
+                var idComm = (event.currentTarget.id).replace(btnIdPrefix, '');
+                var pElement = $(`#${pIdPrefix}${idComm}`)[0];
+                pElement.hidden = true;
+                var oldText = pElement.innerHTML;
+                $(`#${pIdPrefix}${idComm}`).after(
+                    `
+                        <div class="newpst-input">
+                        <form>
+                        <textarea rows=2 id="new_comm_${idComm}">${oldText}</textarea>
+                        <form>
+                        <div class="attachments">
+                        <ul>
+                        <li><button type="button" onclick="editComment(${subjectId},${idComm})">Post</button></li>
+                         <li><button type="button">cancel</button></li>
+                        </ul>
+                        </div>
+                        </div>
+                    `
+                );
+
+
+                //console.log(jQuery(`#${textIdPrefix}${idComm}`)[0].innerHTML);
+                // console.log(oldComment);
+                console.log(idComm);
+            });
+
+        });
+    </script>
+}
+

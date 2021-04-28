@@ -134,6 +134,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BillController.cs" />
+    <Compile Include="Controllers\ForumCommentController.cs" />
     <Compile Include="Controllers\ForumSubjectController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
@@ -145,6 +146,7 @@
     </Compile>
     <Compile Include="Models\Answer_Satisfaction.cs" />
     <Compile Include="Models\Bill.cs" />
+    <Compile Include="Models\DBO_User.cs" />
     <Compile Include="Models\ForumComment.cs" />
     <Compile Include="Models\ForumSubject.cs" />
     <Compile Include="Models\Garden.cs" />
@@ -1381,10 +1383,11 @@
     <Content Include="Views\Extra_Views\maps-vector.html" />
     <Content Include="Views\back.cshtml" />
     <Content Include="Views\Bill\Create.cshtml" />
-    <Content Include="Views\Bill\Get_All_Bills.cshtml" />
     <Content Include="Views\Bill\Details.cshtml" />
     <Content Include="Views\Bill\Edit.cshtml" />
     <Content Include="Views\Bill\Delete.cshtml" />
+    <Content Include="Views\dashboardTemplate.cshtml" />
+    <Content Include="Views\Bill\getAllBills.cshtml" />
     <None Include="Views\Extra_Views\pageLogin.cshtml" />
     <Content Include="Views\Extra_Views\page-register.html" />
     <Content Include="Views\Extra_Views\pages-forget.html" />
@@ -1422,10 +1425,11 @@
     <Content Include="Views\Message\GetAllMessages.cshtml" />
     <Content Include="Views\Question_Satisfaction\Create.cshtml" />
     <Content Include="Views\Satisfaction\GetAllSatisfactions.cshtml" />
-    <Content Include="Views\ForumSubject\Index.cshtml" />
+    <Content Include="Views\ForumSubject\listSubjects.cshtml" />
+    <Content Include="Views\ForumSubject\Create.cshtml" />
     <Content Include="Views\ForumSubject\Details.cshtml" />
-    <Content Include="Views\ForumSubject\Delete.cshtml" />
     <Content Include="Views\ForumSubject\Edit.cshtml" />
+    <Content Include="Views\ForumComment\listComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

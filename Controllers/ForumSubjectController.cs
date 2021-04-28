@@ -8,14 +8,17 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using PiDevEsprit.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PiDevEsprit.Models;
+
+
 
 namespace PiDevEsprit.Controllers
 {
     public class ForumSubjectController : Controller
     {
+        
         HttpClient httpClient;
         string baseAddress;
         public ForumSubjectController()
@@ -33,38 +36,105 @@ namespace PiDevEsprit.Controllers
 
 
         // GET: ForumSubject
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> listSubjects()
         {
-            IEnumerable<ForumSubject> forumS = null;
-
+            IEnumerable<ForumSubject> ForumSubjects = null;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:8900/");
-                var result = await client.GetAsync("getAllForumsSubject");
-
-
-                //If success received   
-                if (result.IsSuccessStatusCode)
+                try
                 {
-                    try
+                    var result = await client.GetAsync("getAllForumsSubject");
+                    if (result.IsSuccessStatusCode)
                     {
-                        forumS = await result.Content.ReadAsAsync<IList<ForumSubject>>();
+                        try
+                        {
+                            ForumSubjects = await result.Content.ReadAsAsync<IList<ForumSubject>>();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Console.WriteLine(e.Message);
+                        //Error response received   
+                        ForumSubjects = Enumerable.Empty<ForumSubject>();
+                        ModelState.AddModelError(string.Empty, "Server error try after some time.");
                     }
                 }
-                else
+                catch (NullReferenceException e)
                 {
-                    //Error response received   
-                    forumS = Enumerable.Empty<ForumSubject>();
-                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                    // Do something with e, please.
                 }
+
             }
 
-            return View(forumS);
+            return View(ForumSubjects);
         }
+
+
+        /*
+        // POST: ForumSubject/Create
+        [HttpPost]
+        public async Task<ActionResult> Create(ForumSubject subject, long id1 = 2)
+        {
+            Object ForumSubjectToAdd = new
+            {
+                titre = subject.title,
+                dateStart = subject.postedDate,
+                ques = subject.question,
+                stat = subject.status,
+                vote=subject.voteCount,
+                
+
+            };
+            var objectContent = new StringContent(JsonConvert.SerializeObject(ForumSubjectToAdd), Encoding.UTF8, "application/json");
+            HttpResponseMessage httpResponseMessage = await httpClient.PostAsync("addForumSubject/" + id1 , objectContent);
+            return RedirectToAction("Index", "ForumSubject");
+
+        }
+
+        */
+
+
+        // GET: Categories/Create
+
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(ForumSubject subject,int id=2)
+        {
+           
+
+
+            string Baseurl = "http://localhost:8900/";
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                //    client.DefaultRequestHeaders.Add("Authorization", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWQuYWhlZEBlc3ByaXQudG4kMmEkMTAkWHJlSzdaZUkwZ2xMNFFsTFpKNm1lTzhxNTBUQzdwdFZidWk4OWhmZjZnUERiNWl2aTZkaS5bUk9MRV9BRE1JTl0iLCJpYXQiOjE2MTg2MjAyOTgsImV4cCI6MTYxMjcxNDM4M30.geYwLgC7H47ALR2JqQrG8u5pYcK88QgxB3TYVgQhlcs");
+               //  subject.postedDate = new DateTime();
+
+               
+
+                var response = await client.PostAsJsonAsync("addForumSubject/" + id, subject);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("listSubjects");
+                }
+            }
+            return View(subject);
+
+
+        }
+
 
 
         // GET: ForumSubject/Details/4
@@ -85,23 +155,23 @@ namespace PiDevEsprit.Controllers
 
 
 
-        // GET: ForumSubject/Delete/4
-        public ActionResult Delete(long id)
-        {
-            var tokenResponse = httpClient.DeleteAsync(baseAddress + "removeForumSubject/" + id).Result;
-            if (tokenResponse.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index");
-            }
-            return RedirectToAction("Index");
-        }
+        //// GET: ForumSubject/Delete/4
+        //public ActionResult Delete(long id)
+        //{
+        //    var tokenResponse = httpClient.DeleteAsync(baseAddress + "removeForumSubject/" + id).Result;
+        //    if (tokenResponse.IsSuccessStatusCode)
+        //    {
+        //        return RedirectToAction("listSubjects");
+        //    }
+        //    return RedirectToAction("listSubjects");
+        //}
 
 
 
 
 
         // GET: ForumSubject/Edit/5
-        public ActionResult Edit(int id) 
+/*        public ActionResult Edit(int id) 
         {
             var tokenResponse = httpClient.GetAsync(baseAddress + "retrieve-Subject/" + id).Result;
             if (tokenResponse.IsSuccessStatusCode)
@@ -113,7 +183,7 @@ namespace PiDevEsprit.Controllers
             {
                 return View(new ForumSubject());
             }
-        }
+        }*/
 
         // POST: ForumSubject/Edit/5
         [HttpPost]
@@ -122,7 +192,7 @@ namespace PiDevEsprit.Controllers
             try
             {
                 var APIResponse = httpClient.PutAsJsonAsync<ForumSubject>(baseAddress + "update-forumSubject/" + id, subject).ContinueWith(postTask => postTask.Result.EnsureSuccessStatusCode());
-                return RedirectToAction("Index");
+                return RedirectToAction("listSubjects");
             }
             catch
             {

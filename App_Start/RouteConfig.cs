@@ -18,6 +18,22 @@ namespace PiDevEsprit
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "SignIn", id = UrlParameter.Optional }
             );
+
+
+            routes.MapRoute(
+               name: "createBill",
+               url: "{controller}/{action}/{id}/{id1}",
+               defaults: new { controller = "Bill", action = "Create", id = UrlParameter.Optional, id1 = UrlParameter.Optional }
+           );
+
+            routes.MapRoute(
+               name: "GetCommentBySubject",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "ForumComment", action = "listComments", id=UrlParameter.Optional }
+           );
+           
+
+
         }
     }
 }

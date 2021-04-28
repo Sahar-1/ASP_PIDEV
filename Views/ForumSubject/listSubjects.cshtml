@@ -1,0 +1,93 @@
+﻿@model IEnumerable<PiDevEsprit.Models.ForumSubject>
+
+@{
+    ViewBag.Title = "Forum";
+    Layout = "~/Views/front.cshtml";
+}
+
+
+
+
+
+
+<h2>Forum</h2>
+
+<button type="button" class="mtr-btn"><span><i class="fa fa-plus"></i></span>  <span>@Html.ActionLink("Create New Topic", "Create")</span></button>
+@*<table class="table table-responsive">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.question)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.postedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.voteCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.question)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.postedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.voteCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+
+        </tr>
+    }
+
+</table>*@
+<div class="forum-list">
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th scope="col">forum</th>
+
+                <th scope="col" align="right"></th>
+                <th scope="col" align="right">vote</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <i class="fa fa-comments"></i>
+
+                    <h6 class="widget-title" >@Html.DisplayFor(modelItem => item.title)</h6>
+                    <p> @Html.DisplayFor(modelItem => item.question)</p>
+
+                    <p>@Html.DisplayFor(modelItem => item.postedDate)</p>
+
+                </td>
+                <td>
+                    @Html.ActionLink("View","listComments","ForumComment", new {id = item.id },null)
+                </td>
+
+                <td>  @Html.DisplayFor(modelItem => item.voteCount)</td>
+            </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>

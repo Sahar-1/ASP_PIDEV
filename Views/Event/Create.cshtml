@@ -326,7 +326,7 @@
             }
         }
     </style>
-<style>
+    <style>
     .input-daterange input {
         text-align: left!important;
     }
@@ -348,83 +348,85 @@
                     <h3 class="register-heading">Manage event</h3>
                     <div class="row register-form">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-address-card"></i>
+                            <form method="post" action="@Url.Action("Create")">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-address-card"></i>
+                                            </div>
                                         </div>
+                                        <input id="event_name" name="event_name" placeholder="Event Name" type="text"
+                                               class="form-control" required="required">
                                     </div>
-                                    <input id="event_name" name="event_name" placeholder="Event Name" type="text"
-                                           class="form-control" required="required">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-comment"></i>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-comment"></i>
+                                            </div>
                                         </div>
+                                        <input id="event_description" name="event_description"
+                                               placeholder="Short Description" type="text" class="form-control"
+                                               required="required">
                                     </div>
-                                    <input id="event_description" name="event_description"
-                                           placeholder="Short Description" type="text" class="form-control"
-                                           required="required">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-bell"></i>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-bell"></i>
+                                            </div>
                                         </div>
+                                        <select id="event_type" name="event_type" class="custom-select" required="required">
+                                            <option value="rabbit">Rabbit</option>
+                                            <option value="duck">Duck</option>
+                                            <option value="fish">Fish</option>
+                                        </select>
                                     </div>
-                                    <select id="event_type" name="event_type" class="custom-select" required="required">
-                                        <option value="rabbit">Rabbit</option>
-                                        <option value="duck">Duck</option>
-                                        <option value="fish">Fish</option>
-                                    </select>
-                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-daterange">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-calendar-plus-o"></i>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-daterange">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar-plus-o"></i>
+                                            </div>
                                         </div>
+                                        <input id="event_start_date" name="event_start_date" placeholder="Start Date"
+                                               type="text" class="form-control" required="required">
                                     </div>
-                                    <input id="event_start_date" name="event_start_date" placeholder="Start Date"
-                                           type="text" class="form-control" required="required">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-daterange">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-calendar-check-o"></i>
+                                <div class="form-group">
+                                    <div class="input-group input-daterange">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar-check-o"></i>
+                                            </div>
                                         </div>
+                                        <input id="event_end_date" name="event_end_date" placeholder="End Date" type="text"
+                                               class="form-control" required="required">
                                     </div>
-                                    <input id="event_end_date" name="event_end_date" placeholder="End Date" type="text"
-                                           class="form-control" required="required">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fa fa-group"></i>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-group"></i>
+                                            </div>
                                         </div>
+                                        <input id="event_capacity" name="event_capacity" placeholder="Capacity" type="number"
+                                               class="form-control" required="required">
                                     </div>
-                                    <input id="event_capacity" name="event_capacity" placeholder="Capacity" type="number"
-                                           class="form-control" required="required">
                                 </div>
-                            </div>
-                            <br />
-                            <div class="form-group row">
-                                <div style="margin-left: 1.9rem!important;">
-                                    <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                                <br/>
+                                <div class="form-group row">
+                                    <div style="margin-left: 1.9rem!important;">
+                                        <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

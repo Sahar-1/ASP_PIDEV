@@ -206,7 +206,8 @@ namespace PiDevEsprit.Controllers
             [System.Web.Http.FromBody] string Description,
             [System.Web.Http.FromBody] string Type,
             [System.Web.Http.FromBody] string StartDateOffset,
-            [System.Web.Http.FromBody] string EndDateOffset)
+            [System.Web.Http.FromBody] string EndDateOffset
+            )
         {
 
             return View();

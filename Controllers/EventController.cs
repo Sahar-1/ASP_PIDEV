@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
+using PiDevEsprit.Models;
+using Type = PiDevEsprit.Models.Type;
 
 namespace PiDevEsprit.Controllers
 {
@@ -27,12 +30,18 @@ namespace PiDevEsprit.Controllers
         }
 
         // POST: Event/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Create(
+            [FromBody] string event_name,
+            [FromBody] string event_description,
+            [FromBody] string event_type,
+            [FromBody] string event_start_date,
+            [FromBody] string event_end_date,
+            [FromBody] string event_capacity
+        )
         {
             try
             {
-                // TODO: Add insert logic here
 
                 return RedirectToAction("Index");
             }
@@ -42,15 +51,22 @@ namespace PiDevEsprit.Controllers
             }
         }
 
-        // GET: Event/Edit/5
+        // GET: Event/Edit/{id}
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Event/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        // POST: Event/Edit/{id}
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Edit([FromUri] int id, 
+            [FromBody] string event_name,
+            [FromBody] string event_description,
+            [FromBody] string event_type,
+            [FromBody] string event_start_date,
+            [FromBody] string event_end_date,
+            [FromBody] string event_capacity
+        )
         {
             try
             {
@@ -65,14 +81,14 @@ namespace PiDevEsprit.Controllers
         }
 
         // GET: Event/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete([FromUri] int id)
         {
             return View();
         }
 
         // POST: Event/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [System.Web.Mvc.HttpPost]
+        public ActionResult Delete([FromUri] int id, FormCollection collection)
         {
             try
             {

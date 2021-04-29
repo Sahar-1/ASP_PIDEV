@@ -312,9 +312,10 @@ namespace PiDevEsprit.Controllers
         [HttpGet]
         public ActionResult EditUser(long id)
         {
-            DBO_User user = GetUserDetails(id);
-            return PartialView(user);
+            var user = GetUserDetails(id);
+            return View(user);
         }
+        
         [AuthenticateUser]
         [HttpPost]
         public async Task<ActionResult> EditUser(long id,
@@ -337,6 +338,7 @@ namespace PiDevEsprit.Controllers
                     lastName = LastName,
                     email = Email,
                     accountNonLocked = AccountNonLocked,
+                    date = Date,
                     actif = Actif,
                 };
 

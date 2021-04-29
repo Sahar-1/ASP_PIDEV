@@ -303,13 +303,14 @@ namespace PiDevEsprit.Controllers
 
         }
         [HttpGet]
-        public async Task<ViewResult> ErrorPage()
+        public ViewResult ErrorPage()
         {
             return View();
         }
+        
         [AuthenticateUser]
         [HttpGet]
-        public async Task<ActionResult> EditUser(long id)
+        public ActionResult EditUser(long id)
         {
             DBO_User user = GetUserDetails(id);
             return PartialView(user);
@@ -324,8 +325,6 @@ namespace PiDevEsprit.Controllers
             [System.Web.Http.FromBody] string Date,
             [System.Web.Http.FromBody] string AccountNonLocked)
         {
-
-
             using (var client = new HttpClient()
             {
                 BaseAddress = new Uri("http://localhost:8900/")
@@ -381,7 +380,7 @@ namespace PiDevEsprit.Controllers
 
         [AuthenticateUser]
         [HttpPost]
-        public async Task<ActionResult> MyProfile(long? id)
+        public ActionResult MyProfile(long? id)
         {
             return View();
         }

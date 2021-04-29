@@ -1,93 +1,451 @@
 ﻿@model PiDevEsprit.Models.DBO_Events
 
 @{
-    ViewBag.Title = "Create";
+    Layout = null;
 }
 
-<h2>Create</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Manage Event</title>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>DBO_Events</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })
-            </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .register {
+            background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+            padding: 3%;
+        }
+
+        .register-left {
+            text-align: center;
+            color: #fff;
+            margin-top: 4%;
+        }
+
+        .register-left input {
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            width: 60%;
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #383d41;
+            margin-top: 30%;
+            margin-bottom: 3%;
+            cursor: pointer;
+        }
+
+        .register-right {
+            background: #f8f9fa;
+            border-top-left-radius: 10% 50%;
+            border-bottom-left-radius: 10% 50%;
+        }
+
+        .register-left img {
+            margin-top: 15%;
+            margin-bottom: 5%;
+            width: 25%;
+            -webkit-animation: mover 2s infinite alternate;
+            animation: mover 1s infinite alternate;
+        }
+
+        @@-webkit-keyframes mover {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @@keyframes mover {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .register-left p {
+            font-weight: lighter;
+            padding: 12%;
+            margin-top: -9%;
+        }
+
+        .register .register-form {
+            padding: 10%;
+            margin-top: 10%;
+        }
+
+        .btnRegister {
+            float: right;
+            margin-top: 10%;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            background: #0062cc;
+            color: #fff;
+            font-weight: 600;
+            width: 50%;
+            cursor: pointer;
+        }
+
+        .register .nav-tabs {
+            border: none;
+            background: #0062cc;
+            border-radius: 1.5rem;
+            width: 28%;
+            float: right;
+        }
+
+        .register .nav-tabs .nav-link {
+            padding: 2%;
+            height: 34px;
+            font-weight: 600;
+            color: #fff;
+            border-top-right-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+        }
+
+        .register .nav-tabs .nav-link:hover {
+            border: none;
+        }
+
+        .register .nav-tabs .nav-link.active {
+            width: 100px;
+            color: #0062cc;
+            border: 2px solid #0062cc;
+            border-top-left-radius: 1.5rem;
+            border-bottom-left-radius: 1.5rem;
+        }
+
+        .register-heading {
+            text-align: center;
+            margin-top: 8%;
+            margin-bottom: -15%;
+            color: #495057;
+        }
+    </style>
+    <style>
+
+        .fa-calendar {
+            position: absolute;
+            top: 13px;
+            font-size: 20px;
+            color: #1976D2;
+            z-index: 1000
+        }
+
+        #fa-1 {
+            left: calc(50% - 40px)
+        }
+
+        #fa-2 {
+            left: calc(100% - 40px)
+        }
+
+        .form-control-placeholder {
+            position: absolute;
+            top: -10px !important;
+            padding: 12px 2px 0 2px;
+            opacity: 0.5
+        }
+
+        #end-p {
+            left: calc(50% + 4px)
+        }
+
+        .form-control:focus+.form-control-placeholder,
+        .form-control:valid+.form-control-placeholder {
+            font-size: 95%;
+            top: 10px;
+            transform: translate3d(0, -100%, 0);
+            opacity: 1
+        }
+
+        ::placeholder {
+            color: #BDBDBD;
+            opacity: 1
+        }
+
+        :-ms-input-placeholder {
+            color: #BDBDBD
+        }
+
+        ::-ms-input-placeholder {
+            color: #BDBDBD
+        }
+
+        button:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            outline-width: 0
+        }
+
+        .datepicker {
+            background-color: #fff;
+            border-radius: 0 !important;
+            align-content: center !important;
+            padding: 0 !important
+        }
+
+        .datepicker-dropdown {
+            top: 180px !important;
+            left: calc(50% - 173.5px) !important;
+            border-right: #1976D2;
+            border-left: #1976D2
+        }
+
+        .datepicker-dropdown.datepicker-orient-left:before {
+            left: calc(50% - 6px) !important
+        }
+
+        .datepicker-dropdown.datepicker-orient-left:after {
+            left: calc(50% - 5px) !important;
+            border-bottom-color: #1976D2
+        }
+
+        .datepicker-dropdown.datepicker-orient-right:after {
+            border-bottom-color: #1976D2
+        }
+
+        .datepicker table tr td.today,
+        span.focused {
+            border-radius: 50% !important;
+            background-image: linear-gradient(#FFF3E0, #FFE0B2)
+        }
+
+        thead tr:nth-child(2) {
+            background-color: #1976D2 !important
+        }
+
+        thead tr:nth-child(3) th {
+            font-weight: bold !important;
+            padding: 20px 10px !important;
+            color: #BDBDBD !important
+        }
+
+        tbody tr td {
+            padding: 10px !important
+        }
+
+        tfoot tr:nth-child(2) th {
+            padding: 10px !important;
+            border-top: 1px solid #CFD8DC !important
+        }
+
+        .cw {
+            font-size: 14px !important;
+            background-color: #E8EAF6 !important;
+            border-radius: 0px !important;
+            padding: 0px 20px !important;
+            margin-right: 10px solid #fff !important
+        }
+
+        .old,
+        .day,
+        .new {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 0px !important
+        }
+
+        .day.old,
+        .day.new {
+            color: #E0E0E0 !important
+        }
+
+        .day.old:hover,
+        .day.new:hover {
+            border-radius: 50% !important
+        }
+
+        .old-day:hover,
+        .day:hover,
+        .new-day:hover,
+        .month:hover,
+        .year:hover,
+        .decade:hover,
+        .century:hover {
+            border-radius: 50% !important;
+            background-color: #eee
+        }
+
+        .active {
+            border-radius: 50% !important;
+            color: #fff !important
+        }
+
+        .range-start,
+        .range-end {
+            border-radius: 50% !important;
+            background-image: linear-gradient(#1976D2, #1976D2) !important
+        }
+
+        .range {
+            background-color: #E3F2FD !important
+        }
+
+        .prev,
+        .next,
+        .datepicker-switch {
+            border-radius: 0 !important;
+            padding: 10px 10px 10px 10px !important;
+            font-size: 18px;
+            opacity: 0.7;
+            color: #fff
+        }
+
+        .prev:hover,
+        .next:hover,
+        .datepicker-switch:hover {
+            background-color: inherit !important;
+            opacity: 1
+        }
+
+        @@media screen and (max-width: 726px) {
+            .datepicker-dropdown.datepicker-orient-right:before {
+                right: calc(50% - 6px)
+            }
+
+            .datepicker-dropdown.datepicker-orient-right:after {
+                right: calc(50% - 5px)
+            }
+        }
+    </style>
+<style>
+    .input-daterange input {
+        text-align: left!important;
+    }
+</style>
+
+</head>
+
+<body>
+<div class="register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+            <h3>TO THE MOON</h3>
+            <p>Kids learn more by doing. <br/> Make it count!</p>
         </div>
+        <div class="col-md-9 register-right">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">Manage event</h3>
+                    <div class="row register-form">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-address-card"></i>
+                                        </div>
+                                    </div>
+                                    <input id="event_name" name="event_name" placeholder="Event Name" type="text"
+                                           class="form-control" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <input id="event_description" name="event_description"
+                                           placeholder="Short Description" type="text" class="form-control"
+                                           required="required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-bell"></i>
+                                        </div>
+                                    </div>
+                                    <select id="event_type" name="event_type" class="custom-select" required="required">
+                                        <option value="rabbit">Rabbit</option>
+                                        <option value="duck">Duck</option>
+                                        <option value="fish">Fish</option>
+                                    </select>
+                                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventDescription, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventCapacity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventCapacity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventCapacity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HasFinished, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.HasFinished)
-                    @Html.ValidationMessageFor(model => model.HasFinished, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-daterange">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-calendar-plus-o"></i>
+                                        </div>
+                                    </div>
+                                    <input id="event_start_date" name="event_start_date" placeholder="Start Date"
+                                           type="text" class="form-control" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-daterange">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                        </div>
+                                    </div>
+                                    <input id="event_end_date" name="event_end_date" placeholder="End Date" type="text"
+                                           class="form-control" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-group"></i>
+                                        </div>
+                                    </div>
+                                    <input id="event_capacity" name="event_capacity" placeholder="Capacity" type="number"
+                                           class="form-control" required="required">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group row">
+                                <div style="margin-left: 1.9rem!important;">
+                                    <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventStartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventStartDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventEndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventEndDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+<script>
+    $(document).ready(function(){
+        $('.input-daterange').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            calendarWeeks : true,
+            clearBtn: true,
+            disableTouchKeyboard: true
+        });
+
+    });
+</script>
+
+</body>
+</html>

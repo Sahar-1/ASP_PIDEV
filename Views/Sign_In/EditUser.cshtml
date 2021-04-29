@@ -1,97 +1,861 @@
 ﻿@model PiDevEsprit.Models.DBO_User
 
 @{
-    ViewBag.Title = "EditUser";
- 
+    Layout = null;
 }
 
-<h2>EditUser</h2>
+<!DOCTYPE html>
+<html lang="en">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>User</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Title Page-->
+    <title>Manage User</title>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    <!-- Icons font CSS-->
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    <link href="https://colorlib.com/etc/regform/colorlib-regform-5/vendor/mdi-font/css/material-design-iconic-font.min.css"
+          rel="stylesheet" media="all">
+    <link href="https://colorlib.com/etc/regform/colorlib-regform-5/vendor/font-awesome-4.7/css/font-awesome.min.css"
+          rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <style id="" media="all">/* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWyV9hmIqOjjg.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWyV9hvIqOjjg.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Actif, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.Actif)
-                @Html.ValidationMessageFor(model => model.Actif, "", new { @class = "text-danger" })
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWyV9hnIqOjjg.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWyV9hoIqOjjg.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWyV9hkIqOjjg.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWyV9hlIqOjjg.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWyV9hrIqM.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem6YaGs126MiZpBA-UFUK0Udc1UAw.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem6YaGs126MiZpBA-UFUK0ddc1UAw.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem6YaGs126MiZpBA-UFUK0Vdc1UAw.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem6YaGs126MiZpBA-UFUK0adc1UAw.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem6YaGs126MiZpBA-UFUK0Wdc1UAw.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem6YaGs126MiZpBA-UFUK0Xdc1UAw.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem6YaGs126MiZpBA-UFUK0Zdc0.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKXGUdhmIqOjjg.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKXGUdhvIqOjjg.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKXGUdhnIqOjjg.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKXGUdhoIqOjjg.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKXGUdhkIqOjjg.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKXGUdhlIqOjjg.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKXGUdhrIqM.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWiUNhmIqOjjg.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWiUNhvIqOjjg.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWiUNhnIqOjjg.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWiUNhoIqOjjg.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWiUNhkIqOjjg.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWiUNhlIqOjjg.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKWiUNhrIqM.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKW-U9hmIqOjjg.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKW-U9hvIqOjjg.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKW-U9hnIqOjjg.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKW-U9hoIqOjjg.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKW-U9hkIqOjjg.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKW-U9hlIqOjjg.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/memnYaGs126MiZpBA-UFUKW-U9hrIqM.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OX-hpOqc.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OVuhpOqc.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OXuhpOqc.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OUehpOqc.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OXehpOqc.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OXOhpOqc.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN_r8OUuhp.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFWJ0bbck.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFUZ0bbck.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFWZ0bbck.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFVp0bbck.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFWp0bbck.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFW50bbck.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFVZ0b.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOX-hpOqc.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOVuhpOqc.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOXuhpOqc.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOUehpOqc.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOXehpOqc.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOXOhpOqc.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UNirkOUuhp.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOX-hpOqc.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOVuhpOqc.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOXuhpOqc.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOUehpOqc.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOXehpOqc.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOXOhpOqc.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    /* cyrillic-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rsOX-hpOqc.woff2) format('woff2');
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+
+    /* cyrillic */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rsOVuhpOqc.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+
+    /* greek-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rsOXuhpOqc.woff2) format('woff2');
+        unicode-range: U+1F00-1FFF;
+    }
+
+    /* greek */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rsOUehpOqc.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+    }
+
+    /* vietnamese */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rsOXehpOqc.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
+    }
+
+    /* latin-ext */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rsOXOhpOqc.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+
+    /* latin */
+    @@font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 800;
+        src: url(https://fonts.gstatic.com/s/opensans/v18/mem5YaGs126MiZpBA-UN8rsOUuhp.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    </style>
+
+    <!-- Vendor CSS-->
+    <link href="https://colorlib.com/etc/regform/colorlib-regform-5/vendor/select2/select2.min.css" rel="stylesheet"
+          media="all">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <style>
+        .minitoggle{
+            position: relative;
+            width: 90px;
+            height: 54px;
+            background-color: #EBEBEB;
+            border: 1px solid #E6E6E6;
+            border-radius: 56px;
+            box-shadow: inset 0 0 4px rgba(0, 0, 0, .1);
+        }
+
+        .minitoggle .toggle-handle {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            z-index: 1;
+            width: 48px;
+            height: 48px;
+            background-color: #fff;
+            background-image: -webkit-linear-gradient(top, #fff 0, #f2f2f2 100%);
+            background-image: linear-gradient(to bottom, #fff 0, #f2f2f2 100%);
+            border-radius: 100px;
+            -webkit-transition: -webkit-transform 0.1s ease-in-out, border 0.1s ease-in-out;
+            transition: transform 0.1s ease-in-out, border 0.1s ease-in-out;
+            box-shadow: 0px 2px 3px 0 rgba(0,0,0,0.20);
+
+        }
+
+        .minitoggle.active {
+            background-color: #4CD964;
+            border: 1px solid #4CD964;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, .25);
+        }
+
+        .minitoggle.active .toggle-handle {
+            transform: translate3d(28px,0,0);
+        }
+
+        /*blue*/
+
+        .minitoggle.blue.active {
+            background-color: #69BDFE;
+            border-color: #69BDFE;
+        }
+
+        .minitoggle.blue.active .toggle-handle {
+            border-color: #3C78A5;
+        }
+
+        /*yellow*/
+
+        .minitoggle.yellow.active {
+            background-color: #FFE186;
+            border-color: #FFE186;
+        }
+
+        .minitoggle.yellow.active .toggle-handle {
+            border-color: #F1C12F;
+        }
+
+        /*red*/
+
+        .minitoggle.red.active {
+            background-color: #F79A7A;
+            border-color: #F79A7A;
+        }
+
+        .minitoggle.red.active .toggle-handle {
+            border-color: #EC6231;
+        }
+
+        /*orange*/
+
+        .minitoggle.orange.active {
+            background-color: #FFB777;
+            border-color: #FFB777;
+        }
+
+        .minitoggle.orange.active .toggle-handle {
+            border-color: #F70;
+        }
+    </style>
+
+    <!-- Main CSS-->
+    <link href="https://colorlib.com/etc/regform/colorlib-regform-5/css/main.css" rel="stylesheet" media="all">
+    <meta name="robots" content="noindex, follow">
+</head>
+
+<body>
+<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+    <div class="wrapper wrapper--w790">
+        <div class="card card-5">
+            <div class="card-heading">
+                <h2 class="title">Manage User</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="">
+                    <div class="form-row m-b-55">
+                        <div class="name">Name</div>
+                        <div class="value">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group-desc">
+                                        <input class="input--style-5" type="text" name="FirstName">
+                                        <label class="label--desc">first name</label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group-desc">
+                                        <input class="input--style-5" type="text" name="LastName">
+                                        <label class="label--desc">last name</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">Date of Birth</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input class="input--style-5" type="text" id="datepicker" name="date" autocomplete="off" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">Email</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input class="input--style-5" type="email" name="email">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="name">Active</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <div class="active_toggle"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="name">Is Not Blocked</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <div class="active_toggle"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="checkbox" name="active_checkbox" style="display:none" checked="checked" />
+                    <input type="checkbox" name="not_blocked_checkbox" style="display:none" checked="checked" />
+                    <br />
+                    <div>
+                        <button class="btn btn--radius-2 btn--red" type="submit">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.AccountNonLocked, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.AccountNonLocked)
-                @Html.ValidationMessageFor(model => model.AccountNonLocked, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.FailedAttempt, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FailedAttempt, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FailedAttempt, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-    <h2 style="color:red">@ViewBag.ErrorMessage</h2>
 </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+<!-- Jquery JS-->
+<script src="https://colorlib.com/etc/regform/colorlib-regform-5/vendor/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Vendor JS-->
+<script src="https://colorlib.com/etc/regform/colorlib-regform-5/vendor/select2/select2.min.js"></script>
+<script src="https://www.jqueryscript.net/demo/Toggle-Button-Plugin-jQuery-miniToggle/minitoggle.js"></script>
+
+<!-- Main JS-->
+<script src="https://colorlib.com/etc/regform/colorlib-regform-5/js/global.js"></script>
+
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+    $('.active_toggle').minitoggle({
+        on: false // or true
+    }).on("toggle", function(e){
+        if (e.isActive)
+            $('input[name=active_checkbox]').attr('checked', true);
+        else
+            $('input[name=active_checkbox]').attr('checked', false);
+    });
+    $('.not_blocked_toggle').minitoggle({
+        on: false // or true
+    }).on("toggle", function(e){
+        if (e.isActive)
+            $('input[name=not_blocked_checkbox]').attr('checked', true);
+        else
+            $('input[name=not_blocked_checkbox]').attr('checked', false);
+    });
+</script>
+
+</body>
+
+</html>
+<!-- end document-->

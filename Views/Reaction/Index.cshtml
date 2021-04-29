@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PiDevEsprit.Models.Reaction>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/front.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.liked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.liked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.reactionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.reactionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.reactionId })
+        </td>
+    </tr>
+}
+
+</table>

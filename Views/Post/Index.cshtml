@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PiDevEsprit.Models.Post>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/front.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.post_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_of_creation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.types)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.signaler)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.post_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_of_creation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.subject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.types)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.signaler)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.post_id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.post_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.post_id })
+        </td>
+    </tr>
+}
+
+</table>

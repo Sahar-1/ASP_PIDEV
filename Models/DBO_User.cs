@@ -21,7 +21,7 @@ namespace PiDevEsprit.Models
     public class DBO_User
     {
 
-        public long UserId { get; set; }
+        public long Id { get; set; }
         [Required(ErrorMessage = "Email is Required")]
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "adresse email non valide")]
         public string Email { get; set; }
@@ -46,6 +46,13 @@ namespace PiDevEsprit.Models
         public long? LastLoggedIn { get; set; }
         public long? LastLoggedOut { get; set; }
         public long? LockTime { get; set; }
+
+        
+        public string created => CreatedTime.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(this.CreatedTime.Value).DateTime.ToString() : "N/A";
+        public string lastlog => LastLoggedIn.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(this.LastLoggedIn.Value).DateTime.ToString() : "N/A";
+        public string lastlogout => LastLoggedOut.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(this.LastLoggedOut.Value).DateTime.ToString() : "N/A";
+        public string locktime => LockTime.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(this.LockTime.Value).DateTime.ToString() : "N/A";
+
 
         [JsonConverter(typeof(StringEnumConverter))]
         public AuthUserProvider dbo_User_Provider { get; set; }

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<PiDevEsprit.Models.DBO_Events>
+
+<a href="#" title="Notification" data-ripple="">
+    <i class="ti-bell"></i><span>@Model.Count()</span>
+</a>
+<div class="dropdowns">
+    <span>  Notifications  </span>
+    <div style="margin-top: 1rem; margin-bottom: 1rem; ">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <div class="mesg-meta">
+                        <h6>Event : @Html.DisplayFor(modelItem => item.Name)</h6>
+                        <i>@Html.DisplayFor(modelItem => item.EndDateOffset)</i>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

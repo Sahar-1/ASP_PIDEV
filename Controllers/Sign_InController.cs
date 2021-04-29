@@ -70,6 +70,17 @@ namespace PiDevEsprit.Controllers
                     json_response_fields.ForEach(x =>
                         Session[x.Key] = x.Value
                     );
+
+                    var roles = json_response_fields
+                                    .Where(x => x.Key == "roles")
+                                    .Select(x => x.Value.ToObject<string[]>())
+                                    .First()
+                                    .Contains("ROLE_ADMIN");
+
+                    if(!roles)
+                    {
+                        return Json(new { result = "Redirect", url = Url.Action("ClientIndex", "Home") });
+                    }
                     return Json(new { result = "Redirect", url = Url.Action("Index", "Home") });
                 },
                 failure: (error_msg) =>
@@ -112,7 +123,7 @@ namespace PiDevEsprit.Controllers
                   );
                   ViewBag.message = "Check your mail please to verify you account";
                   return Json(new { result = "Redirect", url = Url.Action("SignIn", "Sign_In") });
-                
+
               },
               failure: (error_msg) =>
               {
@@ -144,6 +155,8 @@ namespace PiDevEsprit.Controllers
 
 
         }
+        [HttpGet]
+        [AuthenticateUser]
         public async Task<ActionResult> Get_All_Users()
         {
             IEnumerable<DBO_User> users = null;
@@ -257,13 +270,120 @@ namespace PiDevEsprit.Controllers
                 return View(responseJson);
             }
         }
+        [AuthenticateUser]
+        public DBO_User GetUserDetails(long id)
+        {
+            DBO_User user = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:8900/");
+                var result = client.GetAsync("/retrieve-user/" + id).Result;
 
+
+                //If success received   
+                if (result.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        user = result.Content.ReadAsAsync<DBO_User>().Result;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+                else
+                {
+                    //Error response received   
+                    user = null;
+                    ModelState.AddModelError(string.Empty, "Server error try after some time.");
+                }
+                return user;
+            }
+
+        }
         [HttpGet]
         public async Task<ViewResult> ErrorPage()
         {
             return View();
         }
+        [AuthenticateUser]
+        [HttpGet]
+        public async Task<ActionResult> EditUser(long id)
+        {
+            DBO_User user = GetUserDetails(id);
+            return PartialView(user);
+        }
+        [AuthenticateUser]
+        [HttpPost]
+        public async Task<ActionResult> EditUser(long id,
+            [System.Web.Http.FromBody] string FirstName,
+            [System.Web.Http.FromBody] string LastName,
+            [System.Web.Http.FromBody] string Email,
+            [System.Web.Http.FromBody] string Actif,
+            [System.Web.Http.FromBody] string Date,
+            [System.Web.Http.FromBody] string AccountNonLocked)
+        {
 
 
+            using (var client = new HttpClient()
+            {
+                BaseAddress = new Uri("http://localhost:8900/")
+            })
+            {
+
+                object o = new
+                {
+                    firstName = FirstName,
+                    lastName = LastName,
+                    email = Email,
+                    accountNonLocked = AccountNonLocked,
+                    actif = Actif,
+                };
+
+                var editingUser = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage responseMessage = await client.PutAsync("updateUser/" + id, editingUser);
+                var responseJson = await responseMessage.Content.ReadAsStringAsync();
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.ErrorMessage = "Error updating user , NB: All fields are required .";
+                    return View(o);
+                }
+                return RedirectToAction("Get_All_Users", "Sign_In");
+            }
+
+        }
+        [AuthenticateUser]
+        [HttpGet]
+        public async Task<ActionResult> DeleteUser(long id)
+        {
+            using (var client = new HttpClient()
+            {
+                BaseAddress = new Uri("http://localhost:8900/")
+            })
+            {
+                HttpResponseMessage responseMessage = await client.DeleteAsync("remove-user/" + id);
+                var responseJson = await responseMessage.Content.ReadAsStringAsync();
+
+                return RedirectToAction("Get_All_Users", "Sign_In");
+            }
+        }
+        [AuthenticateUser]
+        [HttpGet]
+        public async Task<ActionResult> MyProfile()
+        {
+
+            var userConnected = long.Parse(Session["id"].ToString()); //Session["id"] as long?;
+            var user = GetUserDetails(userConnected);
+            return View(user);
+        }
+
+        [AuthenticateUser]
+        [HttpPost]
+        public async Task<ActionResult> MyProfile(long? id)
+        {
+            return View();
+        }
     }
 }

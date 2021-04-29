@@ -1,0 +1,149 @@
+﻿@{
+    Layout = null;
+}
+@model PiDevEsprit.Models.DBO_Events
+
+ 
+<head>
+
+    @Styles.Render("~/Content/css/event.less")
+</head>
+<body>
+    <h3>Events Details Identify : @Html.DisplayFor(modelItem => modelItem.Id)</h3>
+    <div id="sliderWrapper">
+        <span class="play fa-stack">
+            <i class="fa fa-play  fa-inverse"></i>
+        </span>
+        <span class="stop fa-stack">
+            <i class="fa fa-stop  fa-inverse"></i>
+        </span>
+        <div id="slider"></div>
+    </div>
+    <div id="events">
+        <div id="wrapper">
+            <div id="header">
+                <div class="container">
+                    <h1>Events this Week</h1>
+                    <h2>Event Name : @Html.DisplayFor(modelItem => modelItem.Name)</h2>
+                    <h2>Pack's that include events</h2>
+                </div>
+            </div>
+            <div id="scroller">
+                <div id="events-list">
+                    <ul>
+                        <li class="event event-01">
+                            <div class="content-wrapper">
+                                <div class="thumb">
+                                    <div class="line"></div>
+                                    <div class="shadow">
+                                        <div class="tags">
+                                            <i class="fa fa-tags"></i>
+                                            <span>Event Type : @Html.DisplayFor(modelItem => modelItem.Type) </span>
+                                        </div>
+                                        <span>Event Description : @Html.DisplayFor(modelItem => modelItem.Description) </span>
+                                        <span>Event Capacity : @Html.DisplayFor(modelItem => modelItem.Capacity) </span>
+                                    </div>
+                                </div>
+                                <div class="event-content">
+                                    <div class="top">
+                                        <h3>Nature Exploration</h3><h4></h4>
+                                        <div class="details">
+                                            <div class="date"><i class="fa fa-calendar"></i> <span> FROM @Html.DisplayFor(modelItem => modelItem.StartDateOffset)</span> <span>TO @Html.DisplayFor(modelItem => modelItem.EndDateOffset)</span></div>
+                                            <div class="hour"><i class="fa fa-clock-o"></i> <span>8 PM</span></div>
+                                            <div class="mini-icons">
+                                                <i class="fa fa-eye"></i><i class="fa fa-qrcode"></i><i class="fa fa-camera"></i><i class="fa fa-film"></i>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="prices">
+                                        <div class="section">
+                                            <div class="label">Discount</div>
+                                            <div class="price">30%</div>
+                                        </div>
+                                        <div class="section shadow-left">
+                                            <div class="label">Discount</div>
+                                            <div class="price">$100</div>
+                                        </div>
+                                        <div class="section shadow-left">
+                                            <div class="label">Points</div>
+                                            <div class="price">100</div>
+                                        </div>
+                                    </div>
+                                    <div class="bottom"><a @Html.ActionLink("Go back to List","GetAllEventsManagements","Home") <i class="fa fa-chevron-right"></i></a></div>
+                                </div>    <div class="clear"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="timeline"></div>
+            </div>
+        </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var event = $('.event')
+                , tl = new TimelineLite({ onUpdate: updateSlider, onComplete: restart })
+                , wid = $(window).width()
+                , PowVal = ''
+                , PowOut = 'Back' + PowVal + '.easeOut'
+                , PowIn = 'Back' + PowVal + '.easeIn'
+                , PowInOut = 'Back' + PowVal + '.easeInOut'
+                , playButton = $('.play')
+                , stopButton = $('.stop')
+                , eventContent = $('.content-wrapper')
+                , thumb = $('.thumb')
+                , contentItems = $('.top h3,.top h4, .details > div')
+                , tags = $('.tags')
+                , pricesLabels = $('.section .label')
+                , pricesPrices = $('.section .price')
+                , bottomLink = $('.bottom a')
+                , speed = 0.8;
+
+            tl.set(event, { left: wid })
+                .set(thumb, { backgroundSize: '320px 320px' })
+                .set(tags, { left: 200, autoAlpha: 0 })
+                .set(bottomLink, { right: 200, autoAlpha: 0 })
+                .set(contentItems, { left: 200, autoAlpha: 0 })
+                .set(pricesLabels, { scale: 0 })
+                .set(pricesPrices, { scale: 0 })
+                .to(event, speed, { left: 0, ease: PowOut }, 1, 'intro')
+                .staggerTo(contentItems, speed, { left: 0, autoAlpha: 1, ease: Elastic.easeInOut }, 0.2, '-=0.6')
+                .to(tags, speed, { left: 30, autoAlpha: 1, ease: Elastic.easeInOut }, '-=0.6')
+                .staggerTo(pricesLabels, speed, { scale: 1, ease: Elastic.easeInOut }, 0.2, '-=0.6')
+                .staggerTo(pricesPrices, speed, { scale: 1, ease: Elastic.easeInOut }, 0.2, '-=1')
+                .to(bottomLink, speed, { right: 0, autoAlpha: 1, ease: Elastic.easeInOut }, '-=0.6')
+                .to(event, speed, { left: -wid, ease: PowIn }, 8);
+            tl.play();
+
+            $("#slider").slider({
+                range: false, min: 0, max: 100, step: .1,
+                slide: function (event, ui) {
+                    tl.pause(); tl.progress(ui.value / 100);
+                }
+            });
+
+            function updateSlider() {
+                $("#slider").slider("value", tl.progress() * 100);
+            }
+
+            $(playButton).click(function () {
+                tl.stop();
+                tl.restart();
+            })
+            $(stopButton).click(function () {
+                tl.stop();
+            })
+            function restart() {
+                tl.stop();
+                tl.restart();
+            }
+        });
+    </script>
+</body>

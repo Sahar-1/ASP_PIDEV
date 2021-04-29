@@ -1,0 +1,55 @@
+﻿
+@model IEnumerable<PiDevEsprit.Models.DBO_Events>
+
+    <!-- Get Events Cards -->
+    <div id="cardEvent" class="card">
+        @foreach (var item in Model)
+        {
+            <div class="row mb-2 mt-2">
+                <div class="col-md-4">
+                    <img src=~/Content/front/images/resources/news.jpg
+                         alt="..."
+                         class="img-fluid" id="img" />
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <span id="spanEvent" style="text-underline-position:auto; display: block; margin-bottom: 0.5rem;" class="card-title"><b>@Html.DisplayFor(modelItem => item.Name)</b></span>
+                        <p class="card-text">
+                            <span id="dateSpan"> <small class="text-muted">From : <a style="color:forestgreen">@Html.DisplayFor(modelItem => item.StartDateOffset)</a> To : <a style="color:red">@Html.DisplayFor(modelItem => item.EndDateOffset)</a></small></span>
+                            <br />
+                            <span id="spanEvent" style="font-size: 16px;">A <b>@Html.DisplayFor(modelItem => item.Type)</b> event with <b>@Html.DisplayFor(modelItem => item.Capacity)</b> participants</span>
+                            <br /> 
+                            <span style="margin-top: 0.5rem; display: block;" id="spanEvent">@Html.DisplayFor(modelItem => item.Description)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+        <style>
+
+            #cardEvent {
+                text-align: center;
+            }
+
+            #img {
+                padding-top: 20px;
+                border-radius: 8px;
+            }
+
+            #spanEvent {
+                color: black;
+                font-stretch: expanded;
+                border-block-start-color: navajowhite;
+                font-size: 20px;
+            }
+
+            #dateSpan {
+                color: black;
+                font-stretch: extra-expanded;
+                border-block-start-color: navajowhite;
+                font-size: 22px;
+            }
+        </style>
+    </div>
+    <!-- End Events Cards -->
+

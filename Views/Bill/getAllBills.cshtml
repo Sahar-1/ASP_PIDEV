@@ -12,15 +12,27 @@
             <div class="card-header">
                 <strong class="card-title">Factures</strong>
             </div>
-            <div>
-                <button type="submit"><i class="tn btn-success btn-flat m-b-30 m-t-30"></i><span>@Html.ActionLink("Create New Bill", "Create")</span></button>
+            <div class="pt-2 pl-4 d-flex">
+                
+        
+               
+                <span>@Html.ActionLink("Create New Bill", "Create", "Bill", new { @class = "btn btn-warning btn-circle-lg" })</span>
 
+                <a class="mr-4 mt-2" href="http://localhost:8900/download-report" download="report" style="margin-left:auto;">
+                    <i class="fa fa-download"></i>
+                    <span>Download</span>
+                </a>
             </div>
-           
+
+            
+               
+          
+            
+
 
             @*<p>
-                @Html.ActionLink("Create New Bill", "Create")
-            </p>*@
+            @Html.ActionLink("Create New Bill", "Create")
+        </p>*@
             <div class="card-body">
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
@@ -86,9 +98,8 @@
 
 @section Scripts {
     <script type="text/javascript">
-        jQuery(document).ready(function () {
-            //jQuery('#bootstrap-data-table-export').DataTable();
-        });
+        //$(document).ready(function () {
+        //});
     </script>
 }
 

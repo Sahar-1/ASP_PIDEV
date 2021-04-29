@@ -1388,6 +1388,7 @@
     <Content Include="Views\Bill\Delete.cshtml" />
     <Content Include="Views\dashboardTemplate.cshtml" />
     <Content Include="Views\Bill\getAllBills.cshtml" />
+    <Content Include="Views\Bill\imprimer.cshtml" />
     <None Include="Views\Extra_Views\pageLogin.cshtml" />
     <Content Include="Views\Extra_Views\page-register.html" />
     <Content Include="Views\Extra_Views\pages-forget.html" />
@@ -1428,7 +1429,6 @@
     <Content Include="Views\ForumSubject\listSubjects.cshtml" />
     <Content Include="Views\ForumSubject\Create.cshtml" />
     <Content Include="Views\ForumSubject\Details.cshtml" />
-    <Content Include="Views\ForumSubject\Edit.cshtml" />
     <Content Include="Views\ForumComment\listComments.cshtml" />
   </ItemGroup>
   <ItemGroup>

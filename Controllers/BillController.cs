@@ -64,11 +64,8 @@ namespace PiDevEsprit.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Bill bill, string id, string id1)
+        public async Task<ActionResult> Create(Bill bill, int id, int id1)
         {
-
-
 
             string Baseurl = "http://localhost:8900/";
 
@@ -80,7 +77,7 @@ namespace PiDevEsprit.Controllers
                 var response = await client.PostAsJsonAsync("addBill/" + id + "/" + id1, bill);
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("listSubjects");
+                    return RedirectToAction("getAllBills");
                 }
             }
             return View(bill);
@@ -166,17 +163,12 @@ namespace PiDevEsprit.Controllers
 
         // POST: bill/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Bill bill) 
+        public async Task<ActionResult> Edit(int id, Bill bill) 
         {
             try
             {
-                var APIResponse = httpClient.PutAsJsonAsync<Bill>(baseAddress + "updateBill/" + id, bill).ContinueWith(postTask => postTask.Result.EnsureSuccessStatusCode());
+                var APIResponse = await httpClient.PutAsJsonAsync<Bill>(baseAddress + "updateBill/" + id, bill).ContinueWith(postTask => postTask.Result.EnsureSuccessStatusCode());
                 return RedirectToAction("getAllBills",Redirect(Request.Url.AbsoluteUri));
-                
-
-
-
-
 
             }
             catch
@@ -184,7 +176,24 @@ namespace PiDevEsprit.Controllers
                 return View();
             }
         }
+        public async Task<ActionResult> imprimer(String a)
 
+        {
+            a = "pdf";
+
+            var tokenResponse = await httpClient.GetAsync(baseAddress + "report/" + a);
+            if (tokenResponse.IsSuccessStatusCode)
+            {
+
+                return View("~/Views/Bill/imprimer.cshtml");
+            }
+            else
+            {
+                return View("~/Views/Bill/getAllBills.cshtml", new List<Bill>());
+            }
+
+
+        }
 
         // GET: Bill/Delete/4
         public ActionResult Delete(int id) 

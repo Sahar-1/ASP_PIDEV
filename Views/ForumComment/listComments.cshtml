@@ -80,10 +80,10 @@
                         <label class="control-label" for="textarea">Leave a comment</label><i class="mtrl-select"></i>
                     </div>
                     <div class="submit-btns">
-                        <input type="submit" value="Submit" name="Submit" class="btn signup"/>
-                            @*<i>Submit</i>*@
-                            @*<span>@Html.ActionLink("Create New Topic", "Create","ForumSubject",new { subjectId = Model.id },null)</span>*@
-                       @* </input>*@
+                        <input type="submit" value="Submit" name="Submit" class="btn signup" />
+                        @*<i>Submit</i>*@
+                        @*<span>@Html.ActionLink("Create New Topic", "Create","ForumSubject",new { subjectId = Model.id },null)</span>*@
+                        @* </input>*@
                     </div>
                 </form>
             </div>
@@ -91,7 +91,10 @@
     </div>
 
 </div>
+<p>
 
+     @Html.ActionLink("Back", "listSubjects","ForumSubject",new { subjectId = Model.id },null)
+    </p>
 
 @section Scripts
 {
@@ -121,7 +124,7 @@
             }
         });
 
-            
+
         };
 
 
